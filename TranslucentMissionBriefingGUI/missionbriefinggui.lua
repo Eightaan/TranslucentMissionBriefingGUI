@@ -12,7 +12,14 @@ local function UpdatePlayerText(missionbriefinggui)
 		if character and character.unit then
 			missionbriefinggui.current_character_text:set_color(tweak_data.chat_colors[managers.criminals:character_color_id_by_unit(character.unit)])
 			-- From HUDManager:add_mugshot_by_unit(). This works on both team AI and players
-			missionbriefinggui.current_character_text:set_text(character.unit:base():nick_name())
+			local name = tostring(character.unit:base():nick_name() or "")
+
+			-- Limit displayed name to 15 characters
+			if utf8.len(name) > 15 then
+				name = utf8.sub(name, 1, 15) .. "..."
+			end
+
+			missionbriefinggui.current_character_text:set_text(name)
 		end
 
 		local _, _, w, h = missionbriefinggui.current_character_text:text_rect()

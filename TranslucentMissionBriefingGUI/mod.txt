@@ -3,7 +3,7 @@
 	"description" : "Enables turning the mission briefing GUI translucent to view the game session's context before spawning",
 	"author" : "\n    Snh20 (some code formerly by OVERKILL)\n    TdlQ (localizations loading code)\n    Mr.PlayYou [BE] (French translations)",
 	"blt_version" : 2,
-	"version" : "0.0.2.5",
+	"version" : "0.0.2.6",
 	"priority" : 0.9,
 	"color" : "0.15 0.15 0.15",
 	"image" : "_icon.png",
