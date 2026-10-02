@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<mod
+    name = "Translucent Mission Briefing GUI"
+    description = "Enables turning the mission briefing GUI translucent to view the game session's context before spawning"
+	author = "Snh20; Eightan"
+	version = "0.0.2.7"
+	blt_version = "2"
+	priority = "0.9"
+	color = "0.15 0.15 0.15"
+	image = "_icon.png"
+>
+    <update
+        provider = "mws"
+        identifier = "26849"
+        patchnotes = "https://modworkshop.net/mod/26849?tab=changelog"
+    />
+    <hooks>
+        <!-- Main code -->
+        <pre hook_id="core/lib/setups/coresetup" script_path="init.lua"/>
+
+        <group hook_id="lib/">
+            <group :hook_id="managers/">
+                <post :hook_id="menumanager" script_path="menumanager.lua" />
+                <post :hook_id="gameplaycentralmanager" script_path="gameplaycentralmanager.lua"/>
+				<group :hook_id="menu/">
+					<post :hook_id="missionbriefinggui" script_path="missionbriefinggui.lua"/>
+					<post :hook_id="menubackdropgui" script_path="menubackdropgui.lua"/>
+                </group>
+				<group :hook_id="hud/">
+					<post :hook_id="hudmissionbriefing" script_path="hudmissionbriefing.lua"/>
+					<post :hook_id="menubackdropgui" script_path="menubackdropgui.lua"/>
+                </group>
+            </group>
+            <group :hook_id="setups/setup">
+                <post script_path="setup.lua"/>
+            </group>
+            <group :hook_id="states/ingamewaitingforplayers">
+                <post script_path="ingamewaitingforplayers.lua"/>
+            </group>
+        </group>
+    </hooks>
+</mod>

@@ -6,25 +6,37 @@ else
 end
 
 local function UpdatePlayerText(missionbriefinggui)
-	local state = game_state_machine:current_state()
-	if state._spectator_data and alive(missionbriefinggui.current_character_text) then
-		local character = state._spectator_data.teammate_records[state._spectator_data.watch_u_key]
-		if character and character.unit then
-			missionbriefinggui.current_character_text:set_color(tweak_data.chat_colors[managers.criminals:character_color_id_by_unit(character.unit)])
-			-- From HUDManager:add_mugshot_by_unit(). This works on both team AI and players
-			local name = tostring(character.unit:base():nick_name() or "")
+    local state = game_state_machine:current_state()
+    local spectator = state and state._spectator_data
+    local text = missionbriefinggui.current_character_text
 
-			-- Limit displayed name to 15 characters
-			if utf8.len(name) > 15 then
-				name = utf8.sub(name, 1, 15) .. "..."
-			end
+    if not spectator or not alive(text) then
+        return
+    end
 
-			missionbriefinggui.current_character_text:set_text(name)
-		end
+    local records = spectator.teammate_records
+    local character = records and records[spectator.watch_u_key]
+    local unit = character and character.unit
 
-		local _, _, w, h = missionbriefinggui.current_character_text:text_rect()
-		missionbriefinggui.current_character_text:set_size(w, h)
-	end
+    if not alive(unit) then
+        return
+    end
+
+    local color_id = managers.criminals:character_color_id_by_unit(unit)
+    local color = color_id and tweak_data.chat_colors[color_id]
+
+    if color then
+        text:set_color(color)
+    end
+
+	-- From HUDManager:add_mugshot_by_unit(). This works on both team AI and players
+    local base = unit:base()
+    if base and base.nick_name then
+        text:set_text(base:nick_name())
+    end
+
+    local _, _, w, h = text:text_rect()
+    text:set_size(w, h)
 end
 
 local function FadeOutFunc(o)
