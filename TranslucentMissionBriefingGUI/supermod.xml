@@ -3,7 +3,7 @@
     name = "Translucent Mission Briefing GUI"
     description = "Enables turning the mission briefing GUI translucent to view the game session's context before spawning"
 	author = "Snh20; Eightan"
-	version = "0.0.2.7"
+	version = "0.0.2.8"
 	blt_version = "2"
 	priority = "0.9"
 	color = "0.15 0.15 0.15"
